@@ -3,6 +3,10 @@
 build/            # Pasta de build (contém arquivos gerados)
 !gradle/wrapper/gradle-wrapper.jar  # ✅ Mantém o JAR do wrapper (essencial)
 gradle-wrapper.properties           # ✅ Mantém as configurações do wrapper
+.gradle/*
+!gradle/wrapper/gradle-wrapper.jar
+build/
+!build/resources/main/
 
 # 📦 ---- ARQUIVOS COMPILADOS/JAR ---- 📦
 *.class          # Bytecode Java
@@ -15,6 +19,11 @@ gradle-wrapper.properties           # ✅ Mantém as configurações do wrapper
 *.iml            # Arquivos de módulo
 *.iws            # Configurações de workspace
 out/             # Pasta de output do IntelliJ
+.idea/
+*.iml
+
+*.lock
+*.bin
 
 # 🐘 ---- POSTGRESQL (BANCO LOCAL) ---- 🐘
 *.pgdump         # Backups do PostgreSQL

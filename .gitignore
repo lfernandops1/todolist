@@ -1,0 +1,36 @@
+# ⚠️ ---- GRADLE (BUILD TOOL) ---- ⚠️
+.gradle/          # Pasta de cache do Gradle
+build/            # Pasta de build (contém arquivos gerados)
+!gradle/wrapper/gradle-wrapper.jar  # ✅ Mantém o JAR do wrapper (essencial)
+gradle-wrapper.properties           # ✅ Mantém as configurações do wrapper
+
+# 📦 ---- ARQUIVOS COMPILADOS/JAR ---- 📦
+*.class          # Bytecode Java
+*.jar            # Arquivos JAR gerados (exceto o wrapper)
+*.war            # Arquivos WAR (se usar web)
+*.ear            # Arquivos EAR (se usar EE)
+
+# 🖥️ ---- IDE (INTELLIJ) ---- 🖥️
+.idea/           # Configurações da IDE
+*.iml            # Arquivos de módulo
+*.iws            # Configurações de workspace
+out/             # Pasta de output do IntelliJ
+
+# 🐘 ---- POSTGRESQL (BANCO LOCAL) ---- 🐘
+*.pgdump         # Backups do PostgreSQL
+/postgres_data/  # ✅ Se usar Docker com volume local para dados
+
+# 🔧 ---- SPRING BOOT (CONFIGURAÇÕES) ---- 🔧
+.env             # Variáveis de ambiente (sensíveis!)
+.env.local       # Overrides locais
+application-*.properties  # Profiles (dev, test, etc)
+!application.properties   # ✅ Mantém o arquivo principal
+
+# 📜 ---- LOGS/TEMP ---- 📜
+logs/            # Pasta de logs
+*.log            # Arquivos de log
+tmp/             # Arquivos temporários
+
+# 🖥️ ---- SISTEMA OPERACIONAL ---- 🖥️
+.DS_Store        # Metadados do macOS
+Thumbs.db        # Metadados do Windows

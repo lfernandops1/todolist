@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @RequiredArgsConstructor
 @Entity
-@Table(name = "atividade")
+@Table(name = "atividades")
 public class Atividade {
 
     @Id

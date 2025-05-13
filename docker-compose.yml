@@ -1,0 +1,98 @@
+version: '3.8'
+
+# Definindo os serviços que serão usados (app e postgres)
+services:
+  # Serviço da aplicação (backend)
+  app:
+    # Especifica como o Docker deve construir a imagem do seu app
+    build: .
+
+    # Expondo a porta 8080 para que você possa acessar a aplicação
+    ports:
+      - "8080:8080"
+
+    # O app depende do banco de dados, ou seja, o banco deve estar rodando antes do app
+    depends_on:
+      - postgres
+
+    # Variáveis de ambiente para configuração da conexão com o banco
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/todolist  # Conexão JDBC com o Postgres
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}  # Usando variáveis de ambiente
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}  # Usando variáveis de ambiente
+
+    # Definindo a rede do Docker onde os containers se comunicarão
+    networks:
+      - app-network
+
+    # Configuração de logs para evitar que eles ocupem muito espaço
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"  # Limite de 10MB por arquivo de log
+        max-file: "3"    # Manter no máximo 3 arquivos de log
+
+    # (Opcional) Defina o tempo de espera para o banco de dados estar disponível, se necessário
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+
+    # Usando o arquivo .env dentro do serviço
+    env_file:
+      - .env
+
+    # Limitação de recursos usando deploy
+    deploy:
+      resources:
+        limits:
+          memory: 1G  # Limite de memória a 1GB
+
+  # Serviço do banco de dados PostgreSQL
+  postgres:
+    # Imagem oficial do PostgreSQL 15
+    image: postgres:15
+
+    # Nome do container para facilitar o gerenciamento
+    container_name: meu-postgres
+
+    # Definindo variáveis de ambiente para configuração do banco de dados
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}  # Nome do banco de dados
+      POSTGRES_USER: ${POSTGRES_USER}  # Usuário do banco
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Senha do banco
+
+    # Expondo a porta 5432 para acesso ao banco de dados
+    ports:
+      - "5432:5432"
+
+    # Conectando à mesma rede que o app para comunicação interna entre containers
+    networks:
+      - app-network
+
+    # Configuração de volume para persistir dados
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Volume nomeado para persistência dos dados
+
+    # Configuração de logs para controlar o tamanho dos arquivos de log do banco
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"  # Limite de 10MB por arquivo de log
+        max-file: "3"    # Manter no máximo 3 arquivos de log
+
+    # Limitação de recursos usando deploy
+    deploy:
+      resources:
+        limits:
+          memory: 1G  # Limite de memória a 1GB
+
+# Definição de redes para permitir comunicação entre os containers
+networks:
+  app-network:
+
+# Definição de volumes nomeados para persistência de dados do PostgreSQL
+volumes:
+  postgres_data:  # Este volume será usado para armazenar os dados do banco de dados de forma persistente

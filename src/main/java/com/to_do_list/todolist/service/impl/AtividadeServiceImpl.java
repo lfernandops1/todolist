@@ -32,6 +32,10 @@ public class AtividadeServiceImpl implements AtividadeService {
         Atividade atividadeEncontrada = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Atividade não encontrada"));
 
+        if (atividade.getTitulo() == null && atividade.getDescricao() == null && atividade.getCompletado() == null) {
+            throw new RuntimeException("Nenhum campo válido fornecido para atualização");
+        }
+
         Optional.ofNullable(atividade.getTitulo()).ifPresent(atividadeEncontrada::setTitulo);
         Optional.ofNullable(atividade.getDescricao()).ifPresent(atividadeEncontrada::setDescricao);
         Optional.ofNullable(atividade.getCompletado()).ifPresent(atividadeEncontrada::setCompletado);

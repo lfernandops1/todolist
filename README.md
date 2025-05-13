@@ -94,6 +94,14 @@ Você pode testar a API enviando requisições para os endpoints definidos. Se p
     - **Método**: DELETE
     - **Endpoint**: `/api/atividade/{uuid}`
 
+ 📚 Documentação da API com Swagger
+A API está documentada automaticamente com Swagger UI.
+
+Acesse: http://localhost:8080/swagger-ui.html
+
+🌐 CORS
+A aplicação está configurada para aceitar requisições de origens diferentes (CORS habilitado), o que permite integração com front-ends como Angular, React etc.
+
 ## Configuração do Banco de Dados
 
 O projeto usa PostgreSQL. As configurações de conexão estão no arquivo `application.properties` (ou `application.yml`) do Spring Boot.

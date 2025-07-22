@@ -47,7 +47,7 @@ public class AtividadeServiceImpl implements AtividadeService {
 
     @Override
     public List<Atividade> listarAtividades() {
-        return repository.findAll(); // Recupera todas as atividades do banco
+        return repository.findAll();
     }
 
     public Atividade excluirAtividade(UUID id) {
